@@ -75,14 +75,14 @@ const investService = {
     }
   },
 
-  addInvest: async (initialSalary, finalGain, userId) => {
+  addInvest: async (initialSalary, finalGain, userId, brokerId) => {
     try {
       const [result] = await connection.query(
-        "INSERT INTO Invest (initialSalary, finalGain, User_idUser) VALUES (?, ?, ?)",
-        [initialSalary, finalGain, userId]
+        "INSERT INTO Invest (initialSalary, finalGain, User_idUser, Broker_idBroker) VALUES (?, ?, ?, ?)",
+        [initialSalary, finalGain, userId, brokerId]
       );
 
-      return { idInvest: result.insertId };
+      return result;
     } catch (error) {
       throw error;
     }

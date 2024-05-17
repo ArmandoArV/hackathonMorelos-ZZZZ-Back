@@ -54,13 +54,14 @@ const investController = {
 
   addInvest: async (req, res) => {
     try {
-      const { initialSalary, finalGain, userId } = req.body;
-      const result = await investService.addInvest(
+      const { initialSalary, finalGain, userId, brokerId } = req.body;
+      await investService.addInvest(
         initialSalary,
         finalGain,
-        userId
+        userId,
+        brokerId
       );
-      res.status(201).json(result);
+      res.status(201).json({ message: "Investment added successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
