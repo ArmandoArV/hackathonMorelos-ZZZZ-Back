@@ -41,6 +41,17 @@ const aforeService = {
     }
   },
 
+  addAforeTyoe : async (
+    
+  ) => {
+    try {
+      const [rows] = await connection.query("SELECT * FROM Afore");
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   calculateRetirementSavingsBalance: async (idAfore) => {
     try {
       const [rows] = await connection.query(

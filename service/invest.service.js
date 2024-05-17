@@ -53,8 +53,8 @@ const investService = {
 
       // Get broker details for the investment
       const [brokers] = await connection.query(
-        "SELECT * FROM Broker WHERE Invest_idInvest = ?",
-        [idInvest]
+        "SELECT * FROM Broker WHERE idBroker = ?",
+        [invest.Broker_idBroker]
       );
 
       // Assuming there's only one broker per investment for simplicity
@@ -64,12 +64,13 @@ const investService = {
       const broker = brokers[0];
 
       // Calculate the gain
-      const gain = broker.return * periodicity;
+      const gain = broker.returnInversion * periodicity;
 
       // Calculate the final value
       const finalValue = invest.initialSalary + gain;
 
-      return { finalValue };
+      // Include initialSalary as initialInvestment in the response
+      return { initialInvestment: invest.initialSalary, gain, finalValue };
     } catch (error) {
       throw error;
     }
