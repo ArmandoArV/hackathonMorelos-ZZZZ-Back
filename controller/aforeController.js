@@ -22,8 +22,20 @@ const aforeController = {
 
   addAfore: async (req, res) => {
     try {
-      const aforeData = req.body;
-      const id = await aforeService.addAfore(aforeData);
+      const {
+        initialSalary,
+        monthsNumber,
+        User_idUser,
+        AforeBank_idBank,
+        AforeType_idAforeType,
+      } = req.body;
+      const id = await aforeService.addAfore(
+        initialSalary,
+        monthsNumber,
+        User_idUser,
+        AforeBank_idBank,
+        AforeType_idAforeType
+      );
       res.status(201).json({ id });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -34,6 +46,31 @@ const aforeController = {
     try {
       const aforesType = await aforeService.getAforesType();
       res.status(200).json(aforesType);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  getAforeBanksByAforeType: async (req, res) => {
+    try {
+      const { aforeTypeId } = req.params;
+      const aforeBanks = await aforeService.getAforeBanksByAforeType(
+        aforeTypeId
+      );
+      res.status(200).json(aforeBanks);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  calculateRetirementSavingsBalance: async (req, res) => {
+    try {
+      const { AforeType_idAforeType } = req.params;
+      const retirementSavingsBalance =
+        await aforeService.calculateRetirementSavingsBalance(
+          AforeType_idAforeType
+        );
+      res.status(200).json({ retirementSavingsBalance });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
