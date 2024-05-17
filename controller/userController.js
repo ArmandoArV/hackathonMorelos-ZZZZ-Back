@@ -50,15 +50,23 @@ const userController = {
 
   registerUser: async (req, res) => {
     try {
-      const { email, password, name, lastName, secondLastName, dateOfBirth } =
-        req.body;
-      const response = await userService.registerUser(
+      const {
         email,
         password,
         name,
         lastName,
         secondLastName,
-        dateOfBirth
+        dateOfBirth,
+        isFirst,
+      } = req.body;
+      await userService.registerUser(
+        email,
+        password,
+        name,
+        lastName,
+        secondLastName,
+        dateOfBirth,
+        isFirst
       );
 
       res.status(200).json("User registered successfully");
