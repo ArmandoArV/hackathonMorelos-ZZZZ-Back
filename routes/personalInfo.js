@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const personalInfoController = require("../controller/investController");
+const personalInfoController = require("../controller/personalInfoController");
 const middleware = require("../middleware/jwt-middleware");
 
 router.get("/personal-info", middleware.verifyJWT, personalInfoController.getPersonalInfos);

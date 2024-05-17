@@ -1,4 +1,4 @@
-const personalInfoService = require("../service/personalInfoService");
+const personalInfoService = require("../service/personalInfo.service");
 
 const personalInfoController = {
   getPersonalInfos: async (req, res) => {
