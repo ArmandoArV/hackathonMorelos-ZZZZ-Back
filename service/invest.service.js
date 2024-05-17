@@ -81,7 +81,6 @@ const investService = {
         "INSERT INTO Invest (initialSalary, finalGain, User_idUser, Broker_idBroker) VALUES (?, ?, ?, ?)",
         [initialSalary, finalGain, userId, brokerId]
       );
-
       return result;
     } catch (error) {
       throw error;
