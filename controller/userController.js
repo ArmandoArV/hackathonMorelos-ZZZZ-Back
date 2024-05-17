@@ -48,44 +48,20 @@ const userController = {
     }
   },
 
-  getUserTypes: async (req, res) => {
-    try {
-      const userTypes = await userService.getUserTypes();
-
-      res.status(200).json(userTypes);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
   registerUser: async (req, res) => {
     try {
-      const { email, password, name, lastName, dateOfBirth, userTypeId } =
+      const { email, password, name, lastName, secondLastName, dateOfBirth } =
         req.body;
       const response = await userService.registerUser(
         email,
         password,
         name,
         lastName,
-        dateOfBirth,
-        userTypeId
+        secondLastName,
+        dateOfBirth
       );
 
       res.status(200).json("User registered successfully");
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-  updateUserPermissions: async (req, res) => {
-    try {
-      const { idUsers } = req.params;
-      const { email, userTypeId } = req.body; // Assuming email is included in the request body
-      await userService.updateUserPermissions(idUsers, email, userTypeId);
-
-      res.status(200).json({
-        message: "User permissions updated",
-        userId: idUsers,
-      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
