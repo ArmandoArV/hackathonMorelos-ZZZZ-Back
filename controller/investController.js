@@ -55,6 +55,10 @@ const investController = {
   addInvest: async (req, res) => {
     try {
       const { initialSalary, finalGain, userId, brokerId } = req.body;
+      const brokerExists = await investService.getBrokerById(brokerId);
+      if (!brokerExists) {
+        return res.status(400).json({ message: "Invalid brokerId" });
+      }
       await investService.addInvest(
         initialSalary,
         finalGain,
