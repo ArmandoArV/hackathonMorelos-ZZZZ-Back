@@ -5,7 +5,7 @@ const userService = {
   validateUser: async (email, password) => {
     try {
       const [rows] = await connection.query(
-        "SELECT idUsers FROM Users WHERE email = ? AND password = SHA2(?,224)",
+        "SELECT idUser FROM User WHERE email = ? AND password = SHA2(?,224)",
         [email, password]
       );
 
@@ -31,7 +31,7 @@ const userService = {
 
   getUsers: async () => {
     try {
-      const [rows] = await connection.query("SELECT * FROM Users");
+      const [rows] = await connection.query("SELECT * FROM User");
 
       return rows;
     } catch (error) {
@@ -42,7 +42,7 @@ const userService = {
   deleteUser: async (idUsers) => {
     try {
       const [rows] = await connection.query(
-        "DELETE FROM Users WHERE idUsers = ?",
+        "DELETE FROM User WHERE idUser = ?",
         [idUsers]
       );
 
@@ -55,7 +55,7 @@ const userService = {
   getUserById: async (idUsers) => {
     try {
       const [rows] = await connection.query(
-        "SELECT * FROM Users WHERE idUsers = ?",
+        "SELECT * FROM User WHERE idUser = ?",
         [idUsers]
       );
 
@@ -77,7 +77,7 @@ const userService = {
     try {
       // First check if the email already exists
       const [existingUser] = await connection.query(
-        "SELECT email FROM Users WHERE email = ?",
+        "SELECT email FROM User WHERE email = ?",
         [email]
       );
 
@@ -88,7 +88,7 @@ const userService = {
 
       // If the email does not exist, proceed with creating the new user
       const sql =
-        "INSERT INTO Users (email, password, name, lastName, secondLastName ,dateOfBirth, isFirst ) VALUES (?, SHA2(?,224), ?, ?, ?, ?, ?)";
+        "INSERT INTO User (email, password, name, lastName, secondLastName ,dateOfBirth, isFirst ) VALUES (?, SHA2(?,224), ?, ?, ?, ?, ?)";
       const [rows] = await connection.query(sql, [
         email,
         password,

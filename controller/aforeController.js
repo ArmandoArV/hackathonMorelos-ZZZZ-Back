@@ -1,4 +1,4 @@
-const aforeService = require("../service/aforeService");
+const aforeService = require("../service/afore.service");
 
 const aforeController = {
   getAfores: async (req, res) => {

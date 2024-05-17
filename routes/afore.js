@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const aforeController = require("../controllers/aforeController");
+const aforeController = require("../controller/aforeController");
 
 // Routes
 router.get("/afores", aforeController.getAfores);
