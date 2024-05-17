@@ -22,11 +22,11 @@ const debtService = {
     }
   },
 
-  addDebt: async (amount,mounthlyOuput, userId) => {
+  addDebt: async (amount,mounthlyOutput, userId) => {
     try {
       const [result] = await connection.query(
         "INSERT INTO Debt (amount,mounthlyOutput, User_idUser) VALUES (?, ?, ?)",
-        [amount, mounthlyOuput, userId]
+        [amount, mounthlyOutput, userId]
       );
 
       return result;

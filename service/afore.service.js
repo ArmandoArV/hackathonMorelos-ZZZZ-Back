@@ -22,52 +22,29 @@ const aforeService = {
     }
   },
 
-  addAfore: async (
-    typeAfore,
-    comission,
-    initialSalary,
-    monthsNumber,
-    userId
-  ) => {
+  addAfore: async (aforeData) => {
     try {
-      const [result] = await connection.query(
-        "INSERT INTO Afore (typeAfore, comission, initialSalary, monthsNumber, User_idUser) VALUES (?, ?, ?, ?, ?)",
-        [typeAfore, comission, initialSalary, monthsNumber, userId]
-      );
+      const query =
+        "INSERT INTO Afore (initialSalary, monthsNumber, User_idUser, AforeBank_idBank, AforeType_idAforeType) VALUES (?, ?, ?, ?, ?)";
+      const [result] = await connection.query(query, [
+        aforeData.initialSalary,
+        aforeData.monthsNumber,
+        aforeData.userId,
+        aforeData.aforeBankId,
+        aforeData.aforeTypeId,
+      ]);
 
-      return { idAfore: result.insertId };
+      return result.insertId; // Returns the ID of the newly inserted row
     } catch (error) {
       throw error;
     }
   },
-
-  addAforeTyoe : async (
-    
-  ) => {
+  getAforesType: async () => {
     try {
-      const [rows] = await connection.query("SELECT * FROM Afore");
+      const query = `
+      SELECT idAforeType, generation FROM AforeType`;
+      const [rows] = await connection.query(query);
       return rows;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  calculateRetirementSavingsBalance: async (idAfore) => {
-    try {
-      const [rows] = await connection.query(
-        "SELECT initialSalary, comission, monthsNumber FROM Afore WHERE idAfore = ?",
-        [idAfore]
-      );
-
-      if (rows.length === 0) {
-        throw new Error("Afore not found");
-      }
-
-      const { initialSalary, comission, monthsNumber } = rows[0];
-      const retirementSavingsBalance =
-        initialSalary * Math.pow(1 + comission, monthsNumber);
-
-      return { retirementSavingsBalance };
     } catch (error) {
       throw error;
     }

@@ -22,28 +22,18 @@ const aforeController = {
 
   addAfore: async (req, res) => {
     try {
-      const { typeAfore, comission, initialSalary, monthsNumber, userId } =
-        req.body;
-      const result = await aforeService.addAfore(
-        typeAfore,
-        comission,
-        initialSalary,
-        monthsNumber,
-        userId
-      );
-      res.status(201).json(result);
+      const aforeData = req.body;
+      const id = await aforeService.addAfore(aforeData);
+      res.status(201).json({ id });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   },
 
-  calculateRetirementSavingsBalance: async (req, res) => {
+  getAforesType: async (req, res) => {
     try {
-      const { idAfore } = req.params;
-      const result = await aforeService.calculateRetirementSavingsBalance(
-        idAfore
-      );
-      res.status(200).json(result);
+      const aforesType = await aforeService.getAforesType();
+      res.status(200).json(aforesType);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

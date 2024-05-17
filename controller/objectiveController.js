@@ -1,4 +1,4 @@
-const objectiveService = require("../service/objectiveService");
+const objectiveService = require("../service/objective.service");
 
 const objectiveController = {
   getObjectives: async (req, res) => {

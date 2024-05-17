@@ -1,4 +1,4 @@
-const debtService = require("../service/debtService");
+const debtService = require("../service/debt.serivce");
 
 const debtController = {
   getDebt: async (req, res) => {
@@ -26,8 +26,8 @@ const debtController = {
 
   addDebt: async (req, res) => {
     try {
-      const { amount, mounthlyOuput, userId } = req.body;
-      await debtService.addDebt(amount, mounthlyOuput, userId);
+      const { amount, mounthlyOutput, userId } = req.body;
+      await debtService.addDebt(amount, mounthlyOutput, userId);
       res.status(201).json({ message: "Debt added successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });

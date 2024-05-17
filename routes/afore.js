@@ -6,9 +6,5 @@ const aforeController = require("../controller/aforeController");
 router.get("/afores", aforeController.getAfores);
 router.get("/afores/:idAfore", aforeController.getAforeById);
 router.post("/afore", aforeController.addAfore);
-router.get(
-  "/afores/:idAfore/calculate-retirement-savings-balance",
-  aforeController.calculateRetirementSavingsBalance
-);
-
+router.get("/afore-types", aforeController.getAforesType);
 module.exports = router;
