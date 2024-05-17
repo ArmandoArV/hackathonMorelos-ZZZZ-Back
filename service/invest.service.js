@@ -88,14 +88,14 @@ const investService = {
     }
   },
 
-  addBroker: async (name, serial, returnRate, investId) => {
+  addBroker: async (name, serial, returnInversion) => {
     try {
       const [result] = await connection.query(
-        "INSERT INTO Broker (name, serial, return, Invest_idInvest) VALUES (?, ?, ?, ?)",
-        [name, serial, returnRate, investId]
+        "INSERT INTO Broker (name, serial, returnInversion) VALUES (?, ?, ?)",
+        [name, serial, returnInversion]
       );
 
-      return { idBroker: result.insertId };
+      return result;
     } catch (error) {
       throw error;
     }

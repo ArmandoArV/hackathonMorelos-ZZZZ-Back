@@ -68,14 +68,9 @@ const investController = {
 
   addBroker: async (req, res) => {
     try {
-      const { name, serial, returnRate, investId } = req.body;
-      const result = await investService.addBroker(
-        name,
-        serial,
-        returnRate,
-        investId
-      );
-      res.status(201).json(result);
+      const { name, serial, returnInversion } = req.body;
+      await investService.addBroker(name, serial, returnInversion);
+      res.status(201).json({ message: "Broker added successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
