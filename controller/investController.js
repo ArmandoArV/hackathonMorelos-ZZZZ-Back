@@ -14,7 +14,6 @@ const investController = {
     try {
       const { idInvest } = req.params;
       const invest = await investService.getInvestById(idInvest);
-
       res.status(200).json(invest);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -34,7 +33,6 @@ const investController = {
     try {
       const { idBroker } = req.params;
       const broker = await investService.getBrokerById(idBroker);
-
       res.status(200).json(broker);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -48,8 +46,36 @@ const investController = {
         idInvest,
         periodicity
       );
-
       res.status(200).json({ finalValue });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  addInvest: async (req, res) => {
+    try {
+      const { initialSalary, finalGain, userId } = req.body;
+      const result = await investService.addInvest(
+        initialSalary,
+        finalGain,
+        userId
+      );
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  addBroker: async (req, res) => {
+    try {
+      const { name, serial, returnRate, investId } = req.body;
+      const result = await investService.addBroker(
+        name,
+        serial,
+        returnRate,
+        investId
+      );
+      res.status(201).json(result);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

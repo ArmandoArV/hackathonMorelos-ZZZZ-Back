@@ -25,4 +25,7 @@ router.post(
   investController.calculateFinalValue
 );
 
+router.post("/addInvest", middleware.verifyJWT, investController.addInvest);
+
+router.post("/addBroker", middleware.verifyJWT, investController.addBroker);
 module.exports = router;

@@ -69,7 +69,33 @@ const investService = {
       // Calculate the final value
       const finalValue = invest.initialSalary + gain;
 
-      return { finalValue, gain };
+      return { finalValue };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  addInvest: async (initialSalary, finalGain, userId) => {
+    try {
+      const [result] = await connection.query(
+        "INSERT INTO Invest (initialSalary, finalGain, User_idUser) VALUES (?, ?, ?)",
+        [initialSalary, finalGain, userId]
+      );
+
+      return { idInvest: result.insertId };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  addBroker: async (name, serial, returnRate, investId) => {
+    try {
+      const [result] = await connection.query(
+        "INSERT INTO Broker (name, serial, return, Invest_idInvest) VALUES (?, ?, ?, ?)",
+        [name, serial, returnRate, investId]
+      );
+
+      return { idBroker: result.insertId };
     } catch (error) {
       throw error;
     }
