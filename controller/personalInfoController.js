@@ -13,7 +13,9 @@ const personalInfoController = {
   getPersonalInfoById: async (req, res) => {
     try {
       const { idPersonalInfo } = req.params;
-      const personalInfo = await personalInfoService.getPersonalInfoById(idPersonalInfo);
+      const personalInfo = await personalInfoService.getPersonalInfoById(
+        idPersonalInfo
+      );
       if (personalInfo) {
         res.status(200).json(personalInfo);
       } else {
@@ -26,38 +28,32 @@ const personalInfoController = {
 
   addPersonalInfo: async (req, res) => {
     try {
-      const { income, outcome, debt, userId } = req.body;
-      await personalInfoService.addPersonalInfo(income, outcome, debt, userId);
-      res.status(201).json({ message: "Personal info added successfully" });
+      const { userId, income, outcome, debt, startDate, endDate } = req.body;
+      const newPersonalInfoId = await personalInfoService.addPersonalInfo(
+        userId,
+        income,
+        outcome,
+        debt,
+        startDate,
+        endDate
+      );
+      res
+        .status(201)
+        .json({
+          idPersonalInfo: newPersonalInfoId,
+          message: "Personal info added successfully",
+        });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   },
 
-  updatePersonalInfo: async (req, res) => {
+  getMonthlyPersonalInfo: async (req, res) => {
     try {
-      const { idPersonalInfo } = req.params;
-      const { income, outcome, debt } = req.body;
-      const personalInfo = await personalInfoService.getPersonalInfoById(idPersonalInfo);
-      if (!personalInfo) {
-        return res.status(404).json({ message: "Personal info not found" });
-      }
-      await personalInfoService.updatePersonalInfo(idPersonalInfo, income, outcome, debt);
-      res.status(200).json({ message: "Personal info updated successfully" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  deletePersonalInfo: async (req, res) => {
-    try {
-      const { idPersonalInfo } = req.params;
-      const personalInfo = await personalInfoService.getPersonalInfoById(idPersonalInfo);
-      if (!personalInfo) {
-        return res.status(404).json({ message: "Personal info not found" });
-      }
-      await personalInfoService.deletePersonalInfo(idPersonalInfo);
-      res.status(200).json({ message: "Personal info deleted successfully" });
+      const { userId } = req.params;
+      const monthlyPersonalInfo =
+        await personalInfoService.getMonthlyPersonalInfo(userId);
+      res.status(200).json(monthlyPersonalInfo);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

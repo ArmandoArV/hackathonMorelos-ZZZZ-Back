@@ -1,4 +1,5 @@
 const connection = require("../helpers/mysql-config");
+const { getDayMonthYearString } = require("../utils/getMonthYearString");
 
 const personalInfoService = {
   getPersonalInfos: async () => {
@@ -16,46 +17,74 @@ const personalInfoService = {
         "SELECT * FROM PersonalInfo WHERE idPersonalInfo = ?",
         [idPersonalInfo]
       );
-      return rows[0]; 
+      return rows[0];
     } catch (error) {
       throw error;
     }
   },
 
-  addPersonalInfo: async (income, outcome, debt, userId) => {
+  addPersonalInfo: async (
+    userId,
+    income,
+    outcome,
+    debt,
+    startDate,
+    endDate
+  ) => {
     try {
-      const [result] = await connection.query(
-        "INSERT INTO PersonalInfo (income, outcome, debt, User_idUser) VALUES (?, ?, ?, ?)",
-        [income, outcome, debt, userId]
-      );
-
-      return result;
+      const query =
+        "INSERT INTO PersonalInfo (User_idUser, income, outcome, debt, startDate, endDate) VALUES (?, ?, ?, ?, ?, ?)";
+      const [result] = await connection.query(query, [
+        userId,
+        income,
+        outcome,
+        debt,
+        startDate,
+        endDate,
+      ]);
+      return result.insertId;
     } catch (error) {
       throw error;
     }
   },
 
-  updatePersonalInfo: async (idPersonalInfo, income, outcome, debt) => {
+  getMonthlyPersonalInfo: async (userId) => {
     try {
-      const [result] = await connection.query(
-        "UPDATE PersonalInfo SET income = ?, outcome = ?, debt = ? WHERE idPersonalInfo = ?",
-        [income, outcome, debt, idPersonalInfo]
-      );
+      const query = `
+        SELECT 
+          income, 
+          outcome, 
+          debt, 
+          startDate, 
+          endDate,
+          MONTH(startDate) AS startMonth,
+          YEAR(startDate) AS startYear,
+          MONTH(endDate) AS endMonth,
+          YEAR(endDate) AS endYear
+        FROM PersonalInfo
+        WHERE User_idUser = ?
+        ORDER BY startDate, endDate
+      `;
+      const [rows] = await connection.query(query, [userId]);
 
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  },
+      // Format the data
+      const monthlyPersonalInfo = rows.map((row) => ({
+        income: row.income,
+        outcome: row.outcome,
+        debt: row.debt,
+        startMonth: getDayMonthYearString(
+          row.startDate.getDate(),
+          row.startDate.getMonth() + 1,
+          row.startDate.getFullYear()
+        ),
+        endMonth: getDayMonthYearString(
+          row.endDate.getDate(),
+          row.endDate.getMonth() + 1,
+          row.endDate.getFullYear()
+        ),
+      }));
 
-  deletePersonalInfo: async (idPersonalInfo) => {
-    try {
-      const [result] = await connection.query(
-        "DELETE FROM PersonalInfo WHERE idPersonalInfo = ?",
-        [idPersonalInfo]
-      );
-
-      return result;
+      return monthlyPersonalInfo;
     } catch (error) {
       throw error;
     }

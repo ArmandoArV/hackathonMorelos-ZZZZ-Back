@@ -1,4 +1,4 @@
-const debtService = require("../service/debt.serivce");
+const debtService = require("../service/debt.serivce")
 
 const debtController = {
   getDebt: async (req, res) => {
@@ -24,11 +24,41 @@ const debtController = {
     }
   },
 
+  getStartEndDaysById: async (req, res) => {
+    try {
+      const { IdDebt } = req.params;
+      const debt = await debtService.getStartEndDaysById(IdDebt);
+      if (debt) {
+        res.status(200).json(debt);
+      } else {
+        res.status(404).json({ message: "Debt not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
   addDebt: async (req, res) => {
     try {
-      const { amount, mounthlyOutput, userId } = req.body;
-      await debtService.addDebt(amount, mounthlyOutput, userId);
+      const { amount, mounthlyOutput, userId, startDate, endDate } = req.body;
+      await debtService.addDebt(
+        amount,
+        mounthlyOutput,
+        userId,
+        startDate,
+        endDate
+      );
       res.status(201).json({ message: "Debt added successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  getMonthlyDebt: async (req, res) => {
+    try {
+      const { userId } = req.params; // Assuming userId is passed as a parameter
+      const monthlyDebts = await debtService.getMonthlyDebt(userId);
+      res.status(200).json(monthlyDebts);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

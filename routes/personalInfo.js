@@ -3,34 +3,32 @@ const router = express.Router();
 const personalInfoController = require("../controller/personalInfoController");
 const middleware = require("../middleware/jwt-middleware");
 
+// Retrieve all personal information
 router.get(
   "/personal-info",
   middleware.verifyJWT,
   personalInfoController.getPersonalInfos
 );
 
+// Retrieve personal information by ID
 router.get(
   "/personal-info/:idPersonalInfo",
   middleware.verifyJWT,
   personalInfoController.getPersonalInfoById
 );
 
+// Add personal information
 router.post(
   "/personal-info",
   middleware.verifyJWT,
   personalInfoController.addPersonalInfo
 );
 
-router.put(
-  "/personal-info/:idPersonalInfo",
+// Retrieve monthly personal information for a specific user
+router.get(
+  "/personal-info/monthly/:userId",
   middleware.verifyJWT,
-  personalInfoController.updatePersonalInfo
-);
-
-router.delete(
-  "/personal-info/:idPersonalInfo",
-  middleware.verifyJWT,
-  personalInfoController.deletePersonalInfo
+  personalInfoController.getMonthlyPersonalInfo
 );
 
 module.exports = router;
