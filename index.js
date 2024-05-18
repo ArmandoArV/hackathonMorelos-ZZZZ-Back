@@ -6,6 +6,7 @@ const aforeRoutes = require("./routes/afore");
 const personalInfoRoutes = require("./routes/personalInfo");
 const debtRoutes = require("./routes/debt");
 const objectiveRoutes = require("./routes/objective");
+const questionsRoutes = require("./routes/questions");
 
 const app = express();
 const port = 3001;
@@ -19,6 +20,7 @@ app.use("/", aforeRoutes);
 app.use("/", personalInfoRoutes);
 app.use("/", debtRoutes);
 app.use("/", objectiveRoutes);
+app.use("/", questionsRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
