@@ -31,4 +31,11 @@ router.get(
   personalInfoController.getMonthlyPersonalInfo
 );
 
+// Retrieve the average income and outcome for the current month for a specific user
+router.get(
+  "/personal-info/average/:userId",
+  middleware.verifyJWT,
+  personalInfoController.getAverageIncomeOutcome
+);
+
 module.exports = router;

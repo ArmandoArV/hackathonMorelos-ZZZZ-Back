@@ -37,12 +37,10 @@ const personalInfoController = {
         startDate,
         endDate
       );
-      res
-        .status(201)
-        .json({
-          idPersonalInfo: newPersonalInfoId,
-          message: "Personal info added successfully",
-        });
+      res.status(201).json({
+        idPersonalInfo: newPersonalInfoId,
+        message: "Personal info added successfully",
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -54,6 +52,17 @@ const personalInfoController = {
       const monthlyPersonalInfo =
         await personalInfoService.getMonthlyPersonalInfo(userId);
       res.status(200).json(monthlyPersonalInfo);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getAverageIncomeOutcome: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { averageIncome, averageOutcome } =
+        await personalInfoService.getAverageIncomeOutcome(userId);
+
+      res.status(200).json({ averageIncome, averageOutcome });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

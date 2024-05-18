@@ -14,4 +14,11 @@ router.get(
   debtController.getMonthlyDebt
 );
 
+// Add route for calculating the average monthly debt for a specific user
+router.get(
+  "/averageDebt/:userId",
+  middleware.verifyJWT,
+  debtController.calculateAverageDebt
+);
+
 module.exports = router;

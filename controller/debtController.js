@@ -1,4 +1,4 @@
-const debtService = require("../service/debt.serivce")
+const debtService = require("../service/debt.serivce");
 
 const debtController = {
   getDebt: async (req, res) => {
@@ -59,6 +59,16 @@ const debtController = {
       const { userId } = req.params; // Assuming userId is passed as a parameter
       const monthlyDebts = await debtService.getMonthlyDebt(userId);
       res.status(200).json(monthlyDebts);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  calculateAverageDebt: async (req, res) => {
+    try {
+      const { userId } = req.params; // Assuming userId is passed as a parameter
+      const averageDebt = await debtService.calculateAverageDebt(userId);
+      res.status(200).json({ averageDebt });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -89,6 +89,40 @@ const personalInfoService = {
       throw error;
     }
   },
+
+  getAverageIncomeOutcome: async (userId) => {
+    try {
+      // Get the current month and year
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1; // Month is zero-based, so add 1
+      const currentYear = currentDate.getFullYear();
+
+      // Query to fetch income and outcome for the current month
+      const query = `
+        SELECT 
+          AVG(income) AS averageIncome,
+          AVG(outcome) AS averageOutcome
+        FROM PersonalInfo
+        WHERE 
+          User_idUser = ? AND
+          MONTH(startDate) = ? AND
+          YEAR(startDate) = ?
+      `;
+
+      const [rows] = await connection.query(query, [
+        userId,
+        currentMonth,
+        currentYear,
+      ]);
+
+      // Extract the average income and outcome from the result
+      const { averageIncome, averageOutcome } = rows[0];
+
+      return { averageIncome, averageOutcome };
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = personalInfoService;
