@@ -58,6 +58,7 @@ const userController = {
         secondLastName,
         dateOfBirth,
         isFirst,
+        Questions_idQuestions
       } = req.body;
       await userService.registerUser(
         email,
@@ -66,7 +67,8 @@ const userController = {
         lastName,
         secondLastName,
         dateOfBirth,
-        isFirst
+        isFirst,
+        Questions_idQuestions
       );
 
       res.status(200).json("User registered successfully");
