@@ -11,7 +11,7 @@ const userService = {
 
       if (rows.length > 0) {
         const user = rows[0];
-
+        console.log(user);
         let token;
 
         token = jwtMiddleware.generateToken(user.idUsers);
@@ -19,7 +19,7 @@ const userService = {
         return {
           token: token,
           message: "Login successful",
-          userId: user.idUsers,
+          userId: user.idUser,
         };
       } else {
         throw new Error("Invalid email or password");
