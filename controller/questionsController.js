@@ -3,11 +3,11 @@ const questionsService = require("../service/questions.service");
 const questionsController = {
     getInitialQuestions: async (req, res) => {
         try {
-          const objective = await questionsService.getInitialQuestions();
-          if (objective) {
+          const questions = await questionsService.getInitialQuestions();
+          if (questions) {
             res.status(200).json(objective);
           } else {
-            res.status(404).json({ message: "Objective not found" });
+            res.status(404).json({ message: "Questions not found" });
           }
         } catch (error) {
           res.status(500).json({ message: error.message });
@@ -16,11 +16,11 @@ const questionsController = {
 
       getAforeQuestions: async (req, res) => {
         try {
-          const objective = await questionsService.getAforeQuestions();
-          if (objective) {
+          const questions = await questionsService.getAforeQuestions();
+          if (questions) {
             res.status(200).json(objective);
           } else {
-            res.status(404).json({ message: "Objective not found" });
+            res.status(404).json({ message: "Questions not found" });
           }
         } catch (error) {
           res.status(500).json({ message: error.message });
@@ -29,11 +29,11 @@ const questionsController = {
 
       getInversionQuestions: async (req, res) => {
         try {
-          const objective = await questionsService.getInversionQuestions();
-          if (objective) {
+          const questions = await questionsService.getInversionQuestions();
+          if (questions) {
             res.status(200).json(objective);
           } else {
-            res.status(404).json({ message: "Objective not found" });
+            res.status(404).json({ message: "Questions not found" });
           }
         } catch (error) {
           res.status(500).json({ message: error.message });
@@ -42,11 +42,11 @@ const questionsController = {
 
       getSaveQuestions: async (req, res) => {
         try {
-          const objective = await questionsService.getSaveQuestions();
-          if (objective) {
+          const questions = await questionsService.getSaveQuestions();
+          if (questions) {
             res.status(200).json(objective);
           } else {
-            res.status(404).json({ message: "Objective not found" });
+            res.status(404).json({ message: "Questions not found" });
           }
         } catch (error) {
           res.status(500).json({ message: error.message });
@@ -55,11 +55,24 @@ const questionsController = {
 
       getLearnFinanceQuestions: async (req, res) => {
         try {
-          const objective = await questionsService.getInitialQuestions();
-          if (objective) {
+          const questions = await questionsService.getInitialQuestions();
+          if (questions) {
             res.status(200).json(objective);
           } else {
-            res.status(404).json({ message: "Objective not found" });
+            res.status(404).json({ message: "Questions not found" });
+          }
+        } catch (error) {
+          res.status(500).json({ message: error.message });
+        }
+      },
+
+      getAnswers: async (req, res) => {
+        try {
+          const questions = await questionsService.getAnswers();
+          if (questions) {
+            res.status(200).json(objective);
+          } else {
+            res.status(404).json({ message: "Questions not found" });
           }
         } catch (error) {
           res.status(500).json({ message: error.message });

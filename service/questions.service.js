@@ -54,6 +54,17 @@ const questionsService = {
         } catch (error) {
           throw error;
         }
+      },
+
+      getAnswers: async () => {
+        try {
+          const [rows] = await connection.query(
+            "SELECT AnswersAfore.answer FROM hackathon.AnswersAfore JOIN hackathon.Questions ON AnswersAfore.Questions_idQuestions = Questions.idQuestions;",
+          );
+          return rows[0]; 
+        } catch (error) {
+          throw error;
+        }
       }
 }
 
