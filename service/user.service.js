@@ -14,7 +14,7 @@ const userService = {
         console.log(user);
         let token;
 
-        token = jwtMiddleware.generateToken(user.idUsers);
+        token = jwtMiddleware.generateToken(user.idUser);
 
         return {
           token: token,
